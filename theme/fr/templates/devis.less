@@ -1,0 +1,161 @@
+/* Mixins LESS */
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
+.box-sizing (@type: border-box) {
+	-webkit-box-sizing: @type;
+	-moz-box-sizing:    @type;
+	box-sizing:         @type;
+}
+.border-radiuses (@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+	-webkit-border-top-right-radius:    @topright;
+	-webkit-border-bottom-right-radius: @bottomright;
+	-webkit-border-bottom-left-radius:  @bottomleft;
+	-webkit-border-top-left-radius:     @topleft;
+
+	-moz-border-radius-topright:        @topright;
+	-moz-border-radius-bottomright:     @bottomright;
+	-moz-border-radius-bottomleft:      @bottomleft;
+	-moz-border-radius-topleft:         @topleft;
+
+	border-top-right-radius:            @topright;
+	border-bottom-right-radius:         @bottomright;
+	border-bottom-left-radius:          @bottomleft;
+	border-top-left-radius:             @topleft;
+
+	-moz-background-clip:    padding; 
+	-webkit-background-clip: padding-box; 
+	background-clip:         padding-box; 
+}
+/* Overlay */
+#overlay {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index: 2000;
+	background:black;
+	background:rgba(0,0,0,0.75);
+	.box-sizing();
+}
+/* Modal */
+.modal {
+	padding:20px;
+	margin:auto;
+	z-index: 2000;
+	position:relative;
+	min-width: 320px;
+	max-width: 630px;
+	width:650px;
+	height: auto;
+	background:white;
+	.box-shadow(0 0 10px black);
+	.border-radiuses(0, 5px, 5px, 0);
+	
+	form { overflow: hidden; }
+	label { 
+		width:35%; 
+		display: block; 
+		font-weight: bold;
+		margin:5px 15px 0 0; 
+		float:left; 
+		clear:both; 
+		text-align: right;
+	}
+	input, textarea, select { 
+		width:60%; 
+		display:block; 
+		margin:5px 0 10px 0;
+		float:left; 
+		height:20px;
+		padding:2px;
+		
+		&.erreur {
+			border: 1px solid #FF98A4;
+		}
+	}
+	.fields { 
+		min-height:100px;
+		overflow:hidden;
+		margin-bottom:20px;
+	}
+	
+	/* Groupes de réponses : checkbox, 
+	   radio ou champ civilité */
+	.fields div { 
+		display: block;
+		float: left;
+		width: 60%;
+		min-height: 25px;
+		padding-top: 5px;
+		&.civilite label {
+			width: auto;
+			text-align: left;
+			margin:0 10px 0 0; 
+			float:left;
+			clear:none;
+		}
+		&.checkbox label, 
+		&.radio label { 
+			width: 100%; 
+			display: block; 
+			float:left;
+		}
+	}
+	
+	/* Note footer */
+	footer {
+		float: left;
+		display: block;
+		color: #CCC;
+		margin-top: 15px;
+		padding:0;
+		border:none;
+		clear:none;
+		width:auto;
+		font-style:italic
+	}
+	
+	/* Personnalisation des champs de 
+	saisies et boutons spécifiques */
+	textarea { 
+		min-height:50px; 
+		resize:vertical;
+	}
+	input[type=radio], input[type=checkbox] { width:auto; margin:0 5px 0 0; }
+	input[type=reset], input[type=submit] { 
+		margin-left:5px;
+		clear:left; 
+		width:auto; 
+		float:right; 
+		padding: 10px 15px; 
+		height: auto;
+	}
+	
+	&.scrolldown {
+		-webkit-animation: scrolldown 200ms ease-out;
+		-moz-animation: scrolldown 200ms ease-out;
+		-o-animation: scrolldown 200ms ease-out;
+		animation: scrolldown 200ms ease-out;
+	}
+}
+
+@-webkit-keyframes scrolldown { /* Webkit, Chrome and Safari */
+	from { -webkit-transform:translateY(-500px); opacity:0; }
+	  to { -webkit-transform:translateY(0); opacity:1; }
+}
+@-moz-keyframes scrolldown { /* Mozilla Firefox 15 below */
+	from { -moz-transform:translateY(-500px); opacity:0; }
+	  to { -moz-transform:translateY(0); opacity:1; }
+}
+@-o-keyframes scrolldown { /* Opera 12.0 */
+	from { -o-transform:translateY(-500px); opacity:0; }
+	  to { -o-transform:translateY(0); opacity:1; }
+}
+@keyframes scrolldown { /* W3, Opera 12+, Firefox 16+ */
+	from { transform:translateY(-500px); opacity:0; }
+	  to { transform:translateY(0); opacity:1; }
+}

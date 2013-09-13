@@ -1,0 +1,118 @@
+<link rel="stylesheet" href="{racine}/{theme}/{lg}/templates/devis.css" />
+<script type="text/javascript" src="{cdn}/js/kiubi.api.pfo.jquery-1.0.min.js"></script>
+<script type="text/javascript" src="{racine}/{theme}/{lg}/templates/forms.js"></script>
+
+<input id="show_modal" type="submit" value="Demande de devis" />
+
+<div id="overlay" style="display:none">
+  <div class="modal">
+	<h1>Demande de devis</h1>
+	<form method="post" onsubmit="return false;">
+		<div class="fields"><center>Chargement du formulaire...</center></div>
+		<input type="submit" value="Demande de devis" />
+		<input type="reset" value="Annuler" class="submit reset close">
+		<footer>Le contenu de votre panier sera joint à votre demande</footer>
+	</form>
+  </div>
+</div>
+
+<script type="text/javascript">
+	
+	var form_id = '8-97f0869f7d5f1c0';
+	var $form = $('.modal form');
+	var $container = $('.fields', $form);
+	
+	/**
+	 * Ouverture de la modal
+	 */
+	$("#show_modal").click(function(){
+	
+		$('#overlay').show();
+		$('#overlay .modal').addClass('scrolldown');
+		
+		kiubi.forms.get(form_id).done(function(meta, APIForm){	
+
+			$container.empty();
+
+			// on remplis le formulaire avec tous les champs 
+			createForm(APIForm.fields, $container);
+
+			var cart_field = $('[placeholder=\\%cart\\%]', $container);
+			if(cart_field.length)
+			{
+				// on masque ce champ spécial, ainsi que son label
+				cart_field.hide();
+				$('label[for=' + cart_field.attr('id') +']').hide();
+
+				// on récupère le contenu du panier
+				kiubi.cart.get().done(function(meta, data){
+					var text = data.items_count + " produit(s) \n\n";
+					data.items && $.each(data.items, function(num, item){
+						text += "- " + item.product_name + " (" + item.name + ")\n";
+						text += "\t quantité : " + item.quantity + "\n";
+						text += "\t référence : " + item.sku + "\n";
+						text += "\t URL : " + location.protocol + '//' + location.host + item.product_url + "\n";
+						text += "\n";
+					});
+					// on ajoute un descriptif textuel du panier au champ
+					cart_field.val(text);
+				});
+			}
+		});
+	
+	});
+
+	/**
+	 * Soumission du formulaire
+	 */
+	$form.submit(function(){
+		
+		var submit = kiubi.forms.submit(form_id, $form);
+
+		// Réussite
+		submit.done(function(meta, data){
+						
+			$container.empty();
+			$container.append(data.message);
+			
+			$('footer, input[type=submit]', $form).hide();
+			$('div.erreurs', $form).remove();
+			$('input.close', $form).val('Fermer');
+		});
+		
+		// Echec
+		submit.fail(function(meta, error, data){
+			//console.debug(meta, error, data);
+			$('input, textarea, select', $form).removeClass('erreur');
+			$('div.erreurs', $form).remove();
+
+			if(data && data.new_captcha) {
+				// un nouveau captcha à été généré pour ce formulaire
+				$('[name=captcha]', $form).val("");
+				$('label[for=captcha]', $form).html(data.new_captcha+'&nbsp;*');
+			}
+
+			var info_box = $('<div>', {'class':'erreurs'});
+			info_box.insertBefore($container);
+			info_box.append(error.message);
+
+			$.each(error.fields, function(){
+				$('[name="'+this.field+'"]', $form).addClass('erreur');
+				info_box.append("<br>" + this.message);
+			});
+		});
+
+		return false;
+	});
+	
+	/**
+	 * Fermeture de la modal
+	 */
+	$('input.close', $form).click(function(){
+		$('#overlay').hide();
+		$('div.erreurs', $form).remove();
+		$('#overlay .modal form *').show();
+		$container.empty();
+		$(this).val('Annuler');
+	});
+</script>

@@ -1,0 +1,13 @@
+#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2000;background:#000;background:rgba(0,0,0,0.75);-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.modal{padding:20px;margin:auto;z-index:2000;position:relative;min-width:320px;max-width:630px;width:650px;height:auto;background:#fff;-webkit-box-shadow:0 0 10px #000;-moz-box-shadow:0 0 10px #000;box-shadow:0 0 10px #000;-webkit-border-top-right-radius:0;-webkit-border-bottom-right-radius:5px;-webkit-border-bottom-left-radius:5px;-webkit-border-top-left-radius:0;-moz-border-radius-topright:0;-moz-border-radius-bottomright:5px;-moz-border-radius-bottomleft:5px;-moz-border-radius-topleft:0;border-top-right-radius:0;border-bottom-right-radius:5px;border-bottom-left-radius:5px;border-top-left-radius:0;-moz-background-clip:padding;-webkit-background-clip:padding-box;background-clip:padding-box;}.modal form{overflow:hidden}
+.modal label{width:35%;display:block;font-weight:bold;margin:5px 15px 0 0;float:left;clear:both;text-align:right}
+.modal input,.modal textarea,.modal select{width:60%;display:block;margin:5px 0 10px 0;float:left;height:20px;padding:2px}.modal input.erreur,.modal textarea.erreur,.modal select.erreur{border:1px solid #ff98a4}
+.modal .fields{min-height:100px;overflow:hidden;margin-bottom:20px}
+.modal .fields div{display:block;float:left;width:60%;min-height:25px;padding-top:5px}.modal .fields div.civilite label{width:auto;text-align:left;margin:0 10px 0 0;float:left;clear:none}
+.modal .fields div.checkbox label,.modal .fields div.radio label{width:100%;display:block;float:left}
+.modal footer{float:left;display:block;color:#ccc;margin-top:15px;padding:0;border:none;clear:none;width:auto;font-style:italic}
+.modal textarea{min-height:50px;resize:vertical}
+.modal input[type=radio],.modal input[type=checkbox]{width:auto;margin:0 5px 0 0}
+.modal input[type=reset],.modal input[type=submit]{margin-left:5px;clear:left;width:auto;float:right;padding:10px 15px;height:auto}
+.modal.scrolldown{-webkit-animation:scrolldown 200ms ease-out;-moz-animation:scrolldown 200ms ease-out;-o-animation:scrolldown 200ms ease-out;animation:scrolldown 200ms ease-out}
+@-webkit-keyframes scrolldown{from{-webkit-transform:translateY(-500px);opacity:0} to{-webkit-transform:translateY(0);opacity:1}}@-moz-keyframes scrolldown{from{-moz-transform:translateY(-500px);opacity:0} to{-moz-transform:translateY(0);opacity:1}}@-o-keyframes scrolldown{from{-o-transform:translateY(-500px);opacity:0} to{-o-transform:translateY(0);opacity:1}}@keyframes scrolldown{from{transform:translateY(-500px);opacity:0} to{transform:translateY(0);opacity:1}}
